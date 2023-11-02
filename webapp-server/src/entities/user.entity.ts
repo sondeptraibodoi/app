@@ -1,5 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -18,7 +23,7 @@ export class Users {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar_url: string;
 
   @Column({ unique: true })
@@ -30,24 +35,31 @@ export class Users {
   @Column()
   password: string;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamptz', nullable: true })
   email_verified_at: Date;
 
-  @Column()
+  @Column({ nullable: true })
   remember_token: string;
 
   @Column({ type: 'enum', enum: UserRole })
   role: UserRole;
 
-  @Column()
+  @Column({ nullable: true })
   birthday: string;
 
   @Column({ default: true })
   isActive: boolean;
 
-  @Column({ type: 'timestamptz' })
+  @CreateDateColumn({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   created_at: Date;
 
-  @Column({ type: 'timestamptz' })
+  @Column({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
   updated_at: Date;
 }

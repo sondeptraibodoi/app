@@ -7,7 +7,7 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  avatar_url: string;
+  avatar_url?: string;
   username: string;
   phonenumber: string;
   password: string;
